@@ -34,7 +34,8 @@ public class KingBehaviour : MonoBehaviour
     {
         if (isOnTriggerEnter2D)
         {
-            Handheld.Vibrate();
+            Vibration.Vibrate(500);
+            isOnTriggerEnter2D = false;
         }
     }
 
