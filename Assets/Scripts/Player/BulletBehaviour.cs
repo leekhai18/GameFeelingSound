@@ -24,6 +24,14 @@ public class BulletBehaviour : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "BlackHole")
+        {
+            this.OnBulletHit();
+        }
+    }
+
     public void Fire()
     {
         body.AddRelativeForce(Vector2.up * speed);

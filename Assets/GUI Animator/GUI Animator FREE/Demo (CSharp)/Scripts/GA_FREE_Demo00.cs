@@ -87,7 +87,7 @@ public class GA_FREE_Demo00 : MonoBehaviour
 		// Unity 5.3 or higher uses SceneManager.LoadScene instead of Application.LoadLevel,
 		// see http://docs.unity3d.com/Manual/UpgradeGuide53.html
 		// and http://docs.unity3d.com/530/Documentation/ScriptReference/SceneManagement.SceneManager.html
-		SceneManager.LoadScene("GA FREE - Demo01 (960x600px)");
+		//SceneManager.LoadScene("GA FREE - Demo01 (960x600px)");
 	}
 
 	#endregion // Delay
