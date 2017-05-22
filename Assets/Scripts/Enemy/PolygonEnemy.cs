@@ -78,9 +78,7 @@ public class PolygonEnemy : EnemyBase
 
     public void RotateToTarget()
     {
-        var randVec = Random.insideUnitSphere;
-        randVec.z = 0;
-        RotateToTarget(PlayerBehaviour.Instance.transform.position + randVec);
+        RotateToTarget(PlayerBehaviour.Instance.transform.position);
     }
 
     public override void ReturnPool()
@@ -130,7 +128,6 @@ public class PolygonEnemy : EnemyBase
         other.SetLevel(currentLevel);
         other.RotateRandom();
         other.velocity *= currentLevel;
-        RotateRandom();
         timer = 0;
     }
 
