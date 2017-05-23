@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpectrumCircle : MonoBehaviour
+public class SpectrumCircle : Singleton<SpectrumCircle>
 { 
     public GameObject melodyPrefab;
 

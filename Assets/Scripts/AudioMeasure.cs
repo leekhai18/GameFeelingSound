@@ -13,7 +13,7 @@ public class AudioMeasure : Singleton<AudioMeasure>
     float[] _samples;
     private float[] _spectrum;
     private float _fSample;
-    private AudioSource audio;
+    public AudioSource audioSource;
 
     public float[] Spectrum
     {
@@ -23,9 +23,12 @@ public class AudioMeasure : Singleton<AudioMeasure>
         }
     }
 
-    void Awake()
+    protected override void Awake()
     {
-        audio = GetComponent<AudioSource>();
+        base.Awake();
+
+        audioSource.clip = AudioManager.Instance.audioBackgroudLv1;
+        
     }
 
     void Start()
@@ -33,6 +36,7 @@ public class AudioMeasure : Singleton<AudioMeasure>
         _samples = new float[QSamples];
         _spectrum = new float[QSamples];
         _fSample = AudioSettings.outputSampleRate;
+        audioSource.Play();
     }
 
     void Update()
@@ -42,7 +46,7 @@ public class AudioMeasure : Singleton<AudioMeasure>
 
     void AnalyzeSound()
     {
-        audio.GetOutputData(_samples, 0); // fill array with samples
+        GetComponent<AudioSource>().GetOutputData(_samples, 0); // fill array with samples
         int i;
         float sum = 0;
         for (i = 0; i < QSamples; i++)
@@ -53,7 +57,7 @@ public class AudioMeasure : Singleton<AudioMeasure>
         DbValue = 20 * Mathf.Log10(RmsValue / RefValue); // calculate dB
         if (DbValue < -160) DbValue = -160; // clamp it to -160dB min
                                             // get sound spectrum
-        audio.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
+        GetComponent<AudioSource>().GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
         float maxV = 0;
         var maxN = 0;
         for (i = 0; i < QSamples; i++)

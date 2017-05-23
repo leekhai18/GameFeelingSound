@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class KingBehaviour : Singleton<KingBehaviour>
 {
@@ -9,12 +10,6 @@ public class KingBehaviour : Singleton<KingBehaviour>
     [SerializeField] float scaleY = 0.6f;
     [SerializeField] float timeScale = 0.5f;
     bool isOnTriggerEnter2D = false;
-    float timer = 1;
-    bool isGoToBlackHole = false;
-
-    bool isGameOver = false;
-
-    GameObject shield;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,6 +19,8 @@ public class KingBehaviour : Singleton<KingBehaviour>
             PoolManager.Instance.StartCoroutine(ReleasePrefabEffect(prefabTriangle));
             ZoomIn();
             PoolManager.Instance.StartCoroutine(ZoomOut());
+
+            isOnTriggerEnter2D = true;
         }
         if (collision.tag == "PolygonEnemy")
         {
@@ -31,27 +28,21 @@ public class KingBehaviour : Singleton<KingBehaviour>
             PoolManager.Instance.StartCoroutine(ReleasePrefabEffect(prefabPolygon));
             ZoomIn();
             PoolManager.Instance.StartCoroutine(ZoomOut());
+
+            isOnTriggerEnter2D = true;
         }
         if (collision.tag == "StarEnemy")
         {
             ZoomIn();
             PoolManager.Instance.StartCoroutine(ZoomOut());
-            PoolManager.Instance.StartCoroutine(GoToBlackHole());
-        }
+            GameManager.Instance.SuckInBlackHole();
 
-        isOnTriggerEnter2D = true;
+            isOnTriggerEnter2D = true;
+        }
     }
 
     private void Update()
     {
-        if (timer > 0 && isGoToBlackHole == true)
-        {
-            timer -= Time.deltaTime * 0.5f;
-            Vector3 vec3 = new Vector3(timer, timer, timer);
-            transform.localScale = vec3;
-            shield.transform.localScale = vec3;
-            PlayerBehaviour.Instance.transform.localScale = vec3;
-        }
     }
 
     void OnGUI()
@@ -59,30 +50,12 @@ public class KingBehaviour : Singleton<KingBehaviour>
         if (isOnTriggerEnter2D)
         {
             Vibration.Vibrate(500);
+            Camera.main.DOShakePosition(0.5f, 2).OnComplete(()=>
+            {
+                Camera.main.transform.DOMove(new Vector3(0, 0, -10), 0.5f);
+            });
             isOnTriggerEnter2D = false;
         }
-
-        if (isGameOver)
-        {
-            GUI.Button(new Rect(0, 10, 100, 32), "Game Over!");
-        }
-    }
-
-    IEnumerator GoToBlackHole()
-    {
-        yield return new WaitForSeconds(3);
-
-        isGoToBlackHole = true;
-        var blackHole = GameObject.FindGameObjectWithTag("BlackHole");
-        transform.Translate(blackHole.transform.position);
-
-        shield = GameObject.FindGameObjectWithTag("Shield");
-        shield.transform.Translate(blackHole.transform.position);
-
-        PlayerBehaviour.Instance.transform.Translate(blackHole.transform.position);
-        PlayerBehaviour.Instance.enabled = false;
-
-        isGameOver = true;
     }
 
     IEnumerator ReleasePrefabEffect(GameObject prefab)

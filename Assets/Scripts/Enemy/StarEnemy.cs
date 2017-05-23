@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class StarEnemy : MonoBehaviour
 {
@@ -16,9 +17,6 @@ public class StarEnemy : MonoBehaviour
     Collider2D objCollider;
 
     public GameObject blackHole;
-    GameObject blackH;
-    bool isBlackHoleSpawned = false;
-    float timeBLAppear = 0;
     public GameObject explosionPrefab;
     public GameObject bonousPrefab;
     public GameObject bulletPrefab;
@@ -54,23 +52,19 @@ public class StarEnemy : MonoBehaviour
             Fire();
             timer = 0;
         }
-
-        if (timeBLAppear < 1.5 && isBlackHoleSpawned == true)
-        {
-            timeBLAppear += Time.deltaTime;
-            blackH.transform.localScale = new Vector3(timeBLAppear, timeBLAppear, timeBLAppear);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Earth")
         {
+            var blackH = PoolManager.SpawnObject(blackHole, transform.position, Quaternion.identity);
+            blackH.tag = "BlackHoleKillKing";
+
+            blackH.transform.DOScale(Vector3.zero, 0);
+            blackH.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 3);
+
             ReturnPool();
-            blackH = PoolManager.SpawnObject(blackHole, transform.position, Quaternion.identity);
-            blackH.transform.localScale = Vector3.zero;
-            isBlackHoleSpawned = true;
-            timeBLAppear = 0.5f;
         }
         if (collision.tag == "Bullet")
         {
@@ -95,8 +89,8 @@ public class StarEnemy : MonoBehaviour
         PoolManager.Instance.StartCoroutine(ReleaseExplosionPrefab(explosionEffect));
         ReturnPool();
 
-        var bonous = PoolManager.SpawnObject(bonousPrefab, transform.position, Quaternion.identity).GetComponent<BonousBehaviour>();
-        bonous.Setup();
+        var bonus = PoolManager.SpawnObject(bonousPrefab, transform.position, Quaternion.identity).GetComponent<BonusBehaviour>();
+        bonus.Setup();
     }
 
     IEnumerator ReleaseExplosionPrefab(GameObject explosionPre)
@@ -123,7 +117,7 @@ public class StarEnemy : MonoBehaviour
 
     IEnumerator ReleaseBullet(BulletBehaviour bullet)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         PoolManager.ReleaseObject(bullet.gameObject);
     }
 
