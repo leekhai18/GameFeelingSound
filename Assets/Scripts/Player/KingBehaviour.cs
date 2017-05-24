@@ -11,6 +11,9 @@ public class KingBehaviour : Singleton<KingBehaviour>
     [SerializeField] float timeScale = 0.5f;
     bool isOnTriggerEnter2D = false;
 
+    [SerializeField] float minParticleSpeed = 1;
+    [SerializeField] float particleIncreeVelocity = 10;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "TriangleEnemy")
@@ -41,8 +44,16 @@ public class KingBehaviour : Singleton<KingBehaviour>
         }
     }
 
+    private void Start()
+    {
+        PoolManager.SpawnObject(PoolManager.Instance.listPrefab[11].gameObject, Vector3.zero, Quaternion.identity);
+    }
+
     private void Update()
     {
+        // StarParticle
+        ParticleSystem stars = GameObject.Find("StarsParticle").GetComponent<ParticleSystem>();
+        stars.playbackSpeed = minParticleSpeed + particleIncreeVelocity * AudioMeasure.Instance.RmsValue;
     }
 
     void OnGUI()

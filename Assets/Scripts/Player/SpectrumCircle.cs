@@ -3,30 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpectrumCircle : Singleton<SpectrumCircle>
-{ 
-    public GameObject melodyPrefab;
+{
+    public GameObject[] listMelodyPrefab;
 
     [SerializeField] int numOfMelody = 30;
     [SerializeField] float radius = 4;
     [SerializeField] int valueScaleY = 200;
-    [SerializeField] float minParticleSpeed = 1;
-    [SerializeField] float particleIncreeVelocity = 2;
 
     public List<GameObject> listMelody;
 
-    // Use this for initialization
-    void Start()
+    //
+    private void Setup()
     {
-        listMelody = new List<GameObject>();
-
         for (int i = 0; i < numOfMelody; i++)
         {
             float angle = i * Mathf.PI * 2 / numOfMelody;
             var pos = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
-            var go = Instantiate(melodyPrefab, pos, Quaternion.Euler(0, 0, GameUtils.RadToDeg(angle) - 90), transform) as GameObject;
+
+            int index = (ScoreManager.Instance.currentNumLife - 1) < 3 ? (ScoreManager.Instance.currentNumLife - 1) : 2;
+            var go = Instantiate(listMelodyPrefab[index], pos, Quaternion.Euler(0, 0, GameUtils.RadToDeg(angle) - 90), transform) as GameObject;
 
             listMelody.Add(go);
         }
+    }
+
+    // Use this for initialization
+    public void Start()
+    {
+        listMelody = new List<GameObject>();
+        Setup();
     }
 
     // Update is called once per frame
@@ -40,9 +45,11 @@ public class SpectrumCircle : Singleton<SpectrumCircle>
             previousScale.y = spectrum[i] * valueScaleY;
             listMelody[i].transform.localScale = previousScale;
         }
-
-        ParticleSystem stars = GameObject.Find("StarsParticle").GetComponent<ParticleSystem>();
-        stars.playbackSpeed = minParticleSpeed + particleIncreeVelocity * AudioMeasure.Instance.RmsValue;
     }
 
+    public void Refresh()
+    {
+        listMelody.Clear();
+        PoolManager.ReleaseObject(this.gameObject);
+    }
 }

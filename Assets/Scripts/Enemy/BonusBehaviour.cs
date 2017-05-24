@@ -8,8 +8,21 @@ public class BonusBehaviour : MonoBehaviour
 
     public GameObject[] listBonus;
 
+    //Check out Screen
+    Plane[] planes;
+    Collider2D objCollider;
+    bool IsVisible
+    {
+        get
+        {
+            return GeometryUtility.TestPlanesAABB(planes, objCollider.bounds);
+        }
+    }
+
     private void Awake()
     {
+        planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        objCollider = GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -25,9 +38,10 @@ public class BonusBehaviour : MonoBehaviour
     {
         if (collision.tag == "Bullet")
         {
-            float ran = Random.Range(0, listBonus.Length - 0.5f);
+            if (IsVisible == false)
+                return;
 
-            Debug.Log(ran.ToString());
+            float ran = Random.Range(0.5f, listBonus.Length - 0.5f);
 
             GameObject bonus;
             
@@ -37,6 +51,18 @@ public class BonusBehaviour : MonoBehaviour
 
             PoolManager.Instance.StartCoroutine(ReturnPool(bonus.gameObject, 2.1f));
             PoolManager.Instance.StartCoroutine(ReturnPool(this.gameObject, 0));
+
+            if ((int)ran == 0)
+            {
+                ScoreManager.Instance.currentNumLife++;
+                PoolManager.SpawnObject(PoolManager.Instance.listPrefab[11].gameObject, Vector3.zero, Quaternion.identity);
+            }
+            if ((int)ran == 1)
+            {
+                PlayerManager.Instance.currentNumGun++;
+                PlayerManager.Instance.isNumGunChange = true;
+            }
+
         }
     }
 
