@@ -36,31 +36,19 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	// Canvas
 	public Canvas m_Canvas;
 
+    // GUIAnimFREE objects of Middle button play
+    public GUIAnimFREE m_MiddleCenter_A;
+
 	// GUIAnimFREE objects of title text
 	public GUIAnimFREE m_Title1;
 	public GUIAnimFREE m_Title2;
-	
-	// GUIAnimFREE objects of top and bottom bars
-	public GUIAnimFREE m_TopBar;
-	public GUIAnimFREE m_BottomBar;
-	
-	// GUIAnimFREE objects of TopLeft buttons
-	public GUIAnimFREE m_TopLeft_A;
-	public GUIAnimFREE m_TopLeft_B;
-	
+			
 	// GUIAnimFREE objects of BottomLeft buttons
 	public GUIAnimFREE m_BottomLeft_A;
 	public GUIAnimFREE m_BottomLeft_B;
 	
-	// GUIAnimFREE objects of RightBar buttons
-	public GUIAnimFREE m_RightBar_A;
-	public GUIAnimFREE m_RightBar_B;
-	public GUIAnimFREE m_RightBar_C;
-
 	// Toggle state of TopLeft, BottomLeft and BottomLeft buttons
-	bool m_TopLeft_IsOn = false;
 	bool m_BottomLeft_IsOn = false;
-	bool m_RightBar_IsOn = false;
 	
 	#endregion // Variables
 	
@@ -82,14 +70,15 @@ public class GA_FREE_Demo01 : MonoBehaviour
 		}
 	}
 
-	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
-	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
-	void Start ()
-	{
-		// MoveIn m_TopBar and m_BottomBar
-		m_TopBar.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_BottomBar.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+    private void OnGUI()
+    {
 
+    }
+
+    // Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
+    // http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+    void Start ()
+	{
 		// MoveIn m_Title1 and m_Title2
 		StartCoroutine(MoveInTitleGameObjects());
 
@@ -132,9 +121,8 @@ public class GA_FREE_Demo01 : MonoBehaviour
 		yield return new WaitForSeconds(1.0f);
 
 		// MoveIn all primary buttons
-		m_TopLeft_A.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
 		m_BottomLeft_A.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
-		m_RightBar_A.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
+        m_MiddleCenter_A.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
 
 		// Enable all scene switch buttons
 		StartCoroutine(EnableAllDemoButtons());
@@ -143,16 +131,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	// MoveOut all primary buttons
 	public void HideAllGUIs()
 	{
-		m_TopLeft_A.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_BottomLeft_A.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_RightBar_A.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
+		m_MiddleCenter_A.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
 		
-		if(m_TopLeft_IsOn == true)
-			m_TopLeft_B.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		if(m_BottomLeft_IsOn == true)
 			m_BottomLeft_B.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		if(m_RightBar_IsOn == true)
-			m_RightBar_B.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		
 		// MoveOut m_Title1 and m_Title2
 		StartCoroutine(HideTitleTextMeshes());
@@ -165,11 +148,7 @@ public class GA_FREE_Demo01 : MonoBehaviour
 
 		// MoveOut m_Title1 and m_Title2
 		m_Title1.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
-		m_Title2.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
-		
-		// MoveOut m_TopBar and m_BottomBar
-		m_TopBar.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_BottomBar.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+		m_Title2.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);	
 	}
 	
 	#endregion // MoveIn/MoveOut
@@ -210,74 +189,15 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	
 	#region UI Responder
 
-	public void OnButton_TopLeft()
-	{
-		// Disable m_TopLeft_A, m_RightBar_A, m_RightBar_C, m_BottomLeft_A for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_TopLeft_A.gameObject, 0.3f));
-		StartCoroutine(DisableButtonForSeconds(m_RightBar_A.gameObject, 0.6f));
-		StartCoroutine(DisableButtonForSeconds(m_RightBar_C.gameObject, 0.6f));
-		StartCoroutine(DisableButtonForSeconds(m_BottomLeft_A.gameObject, 0.3f));
-
-		// Toggle m_TopLeft
-		ToggleTopLeft();
-
-		// Toggle other buttons
-		if(m_BottomLeft_IsOn==true)
-		{
-			ToggleBottomLeft();
-		}
-		if(m_RightBar_IsOn==true)
-		{
-			ToggleRightBar();
-		}
-	}
-
 	public void OnButton_BottomLeft()
 	{
 		// Disable m_TopLeft_A, m_RightBar_A, m_RightBar_C, m_BottomLeft_A for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_TopLeft_A.gameObject, 0.3f));
-		StartCoroutine(DisableButtonForSeconds(m_RightBar_A.gameObject, 0.6f));
-		StartCoroutine(DisableButtonForSeconds(m_RightBar_C.gameObject, 0.6f));
 		StartCoroutine(DisableButtonForSeconds(m_BottomLeft_A.gameObject, 0.3f));
 
 		// Toggle m_BottomLeft
 		ToggleBottomLeft();
-		
-		// Toggle other buttons
-		if(m_TopLeft_IsOn==true)
-		{
-			ToggleTopLeft();
-		}
-		if(m_RightBar_IsOn==true)
-		{
-			ToggleRightBar();
-		}
-		
 	}
-	
-	public void OnButton_RightBar()
-	{
-		// Disable m_TopLeft_A, m_RightBar_A, m_RightBar_C, m_BottomLeft_A for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_TopLeft_A.gameObject, 0.3f));
-		StartCoroutine(DisableButtonForSeconds(m_RightBar_A.gameObject, 0.6f));
-		StartCoroutine(DisableButtonForSeconds(m_RightBar_C.gameObject, 0.6f));
-		StartCoroutine(DisableButtonForSeconds(m_BottomLeft_A.gameObject, 0.3f));
-
-		// Toggle m_RightBar
-		ToggleRightBar();
 		
-		// Toggle other buttons
-		if(m_TopLeft_IsOn==true)
-		{
-			ToggleTopLeft();
-		}
-		if(m_BottomLeft_IsOn==true)
-		{
-			ToggleBottomLeft();
-		}
-
-	}
-	
 	#endregion // UI Responder
 	
 	// ########################################
@@ -286,22 +206,6 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	
 	#region Toggle Button
 
-	// Toggle TopLeft buttons
-	void ToggleTopLeft()
-	{
-		m_TopLeft_IsOn = !m_TopLeft_IsOn;
-		if(m_TopLeft_IsOn==true)
-		{
-			// m_TopLeft_B moves in
-			m_TopLeft_B.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		}
-		else
-		{
-			// m_TopLeft_B moves out
-			m_TopLeft_B.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		}
-	}
-	
 	// Toggle BottomLeft buttons
 	void ToggleBottomLeft()
 	{
@@ -315,26 +219,6 @@ public class GA_FREE_Demo01 : MonoBehaviour
 		{
 			// m_BottomLeft_B moves out
 			m_BottomLeft_B.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		}
-	}
-	
-	// Toggle RightBar buttons
-	void ToggleRightBar()
-	{
-		m_RightBar_IsOn = !m_RightBar_IsOn;
-		if(m_RightBar_IsOn==true)
-		{
-			// m_RightBar_A moves out
-			m_RightBar_A.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-			// m_RightBar_B moves in
-			m_RightBar_B.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		}
-		else
-		{
-			// m_RightBar_A moves in
-			m_RightBar_A.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-			// m_RightBar_B moves out
-			m_RightBar_B.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		}
 	}
 	

@@ -35,15 +35,7 @@ public class GA_FREE_Demo05 : MonoBehaviour
 
 	// Canvas
 	public Canvas m_Canvas;
-	
-	// GUIAnimFREE objects of title text
-	public GUIAnimFREE m_Title1;
-	public GUIAnimFREE m_Title2;
-	
-	// GUIAnimFREE objects of top and bottom bars
-	public GUIAnimFREE m_TopBar;
-	public GUIAnimFREE m_BottomBar;
-
+		
 	// GUIAnimFREE objects of dialogs
 	public GUIAnimFREE m_Dialog1;
 	public GUIAnimFREE m_Dialog2;
@@ -73,13 +65,9 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
 	void Start ()
-	{
-		// MoveIn m_TopBar and m_BottomBar
-		m_TopBar.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_BottomBar.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
+	{		
 		// MoveIn m_Title1 and m_Title2
-		StartCoroutine(MoveInTitleGameObjects());
+		StartCoroutine(MoveInPrimaryButtons());
 
 		// Disable all scene switch buttons	
 		// http://docs.unity3d.com/Manual/script-GraphicRaycaster.html
@@ -98,21 +86,7 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	// MoveIn/MoveOut functions
 	// ########################################
 	
-	#region MoveIn/MoveOut
-	
-	// MoveIn m_Title1 and m_Title2
-	IEnumerator MoveInTitleGameObjects()
-	{
-		yield return new WaitForSeconds(1.0f);
-		
-		// MoveIn m_Title1 and m_Title2
-		m_Title1.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
-		m_Title2.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
-		
-		// MoveIn m_Dialog
-		StartCoroutine(MoveInPrimaryButtons());
-	}
-	
+	#region MoveIn/MoveOut	
 	// MoveIn m_Dialog
 	IEnumerator MoveInPrimaryButtons()
 	{
@@ -135,25 +109,7 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		m_Dialog2.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Dialog3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
-		// MoveOut m_Title1 and m_Title2
-		StartCoroutine(HideTitleTextMeshes());
-	}
-	
-	// MoveOut m_Title1 and m_Title2
-	IEnumerator HideTitleTextMeshes()
-	{
-		yield return new WaitForSeconds(1.0f);
-		
-		// MoveOut m_Title1 and m_Title2
-		m_Title1.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
-		m_Title2.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
-		
-		// MoveOut m_TopBar and m_BottomBar
-		m_TopBar.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_BottomBar.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-	}
-	
+	}	
 	#endregion // MoveIn/MoveOut
 	
 	// ########################################
@@ -199,10 +155,10 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		
 		// Disable m_Dialog1 for a few seconds
 		StartCoroutine(DisableButtonForSeconds(m_Dialog1.gameObject, 2.5f));
-		
-		// MoveIn m_Dialog1
-		StartCoroutine(Dialog1_MoveIn());
-	}
+
+        // MoveOut All
+        OnButton_MoveOutAllDialogs();
+    }
 	
 	public void OnButton_Dialog2()
 	{
@@ -211,36 +167,36 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		
 		// Disable m_Dialog2 for a few seconds
 		StartCoroutine(DisableButtonForSeconds(m_Dialog2.gameObject, 2.5f));
-		
-		// MoveIn m_Dialog2
-		StartCoroutine(Dialog2_MoveIn());
-	}
-	
-	public void OnButton_Dialog3()
+
+        // MoveOut All
+        OnButton_MoveOutAllDialogs();
+    }
+
+    public void OnButton_Dialog3()
 	{
 		// MoveOut m_Dialog3
 		m_Dialog3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		
 		// Disable m_Dialog3 for a few seconds
 		StartCoroutine(DisableButtonForSeconds(m_Dialog3.gameObject, 2.5f));
-		
-		// MoveIn m_Dialog3
-		StartCoroutine(Dialog3_MoveIn());
-	}
-	
-	public void OnButton_Dialog4()
+
+        // MoveOut All
+        OnButton_MoveOutAllDialogs();
+    }
+
+    public void OnButton_Dialog4()
 	{
 		// MoveOut m_Dialog4
 		m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		
 		// Disable m_Dialog4 for a few seconds
 		StartCoroutine(DisableButtonForSeconds(m_Dialog4.gameObject, 2.5f));
-		
-		// MoveIn m_Dialog4
-		StartCoroutine(Dialog4_MoveIn());
-	}
-	
-	public void OnButton_MoveOutAllDialogs()
+
+        // MoveOut All
+        OnButton_MoveOutAllDialogs();
+    }
+
+    public void OnButton_MoveOutAllDialogs()
 	{		
 		// Disable m_Dialog1, m_Dialog2, m_Dialog3, m_Dialog4 for a few seconds
 		StartCoroutine(DisableButtonForSeconds(m_Dialog1.gameObject, 2.5f));
@@ -252,13 +208,7 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		m_Dialog1.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Dialog2.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Dialog3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
-		// Move dialogs back to screen with Coroutines
-		StartCoroutine(Dialog1_MoveIn());
-		StartCoroutine(Dialog2_MoveIn());
-		StartCoroutine(Dialog3_MoveIn());
-		StartCoroutine(Dialog4_MoveIn());
+		m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);		
 	}
 	
 	#endregion // UI Responder

@@ -47,102 +47,29 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	// ########################################
 	
 	#region UI Responder
-	
-	// Open Demo Scene 1
-	public void ButtonOpenDemoScene1 ()
-	{
-		// Disable all buttons
-		GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+    // Open SelectLevel Scene
+    public void ButtonOpenSelectLevelScene()
+    {
+        // Disable all buttons
+        GUIAnimSystemFREE.Instance.EnableAllButtons(false);
 
-		// Waits 1.5 secs for Moving Out animation then load next level
-		GUIAnimSystemFREE.Instance.LoadLevel("GA FREE - Demo01 (960x600px)", 1.5f);
-		
-		gameObject.SendMessage("HideAllGUIs");
-	}
-	
-	// Open Demo Scene 2
-	public void ButtonOpenDemoScene2 ()
-	{
-		// Disable all buttons
-		GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+        // Waits 1.5 secs for Moving Out animation then load next level
+        GUIAnimSystemFREE.Instance.LoadLevel("SelectSong", 1);
 
-		// Waits 1.5 secs for Moving Out animation then load next level
-		GUIAnimSystemFREE.Instance.LoadLevel("GA FREE - Demo02 (960x600px)", 1.5f);
-		
-		gameObject.SendMessage("HideAllGUIs");
-	}
-	
-	// Open Demo Scene 3
-	public void ButtonOpenDemoScene3 ()
-	{
-		// Disable all buttons
-		GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+        gameObject.SendMessage("HideAllGUIs");
+    }
 
-		// Waits 1.5 secs for Moving Out animation then load next level
-		GUIAnimSystemFREE.Instance.LoadLevel("GA FREE - Demo03 (960x600px)", 1.5f);
-		
-		gameObject.SendMessage("HideAllGUIs");
-	}
-	
-	// Open Demo Scene 4
-	public void ButtonOpenDemoScene4 ()
-	{
-		// Disable all buttons
-		GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+    // Open Song Scene
+    public void ButtonOpenSongScene()
+    {
+        // Disable all buttons
+        GUIAnimSystemFREE.Instance.EnableAllButtons(false);
 
-		// Waits 1.5 secs for Moving Out animation then load next level
-		GUIAnimSystemFREE.Instance.LoadLevel("GA FREE - Demo04 (960x600px)", 1.5f);
-		
-		gameObject.SendMessage("HideAllGUIs");
-	}
-	
-	// Open Demo Scene 5
-	public void ButtonOpenDemoScene5 ()
-	{
-		// Disable all buttons
-		GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+        // Waits 1.5 secs for Moving Out animation then load next level
+        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 1);
 
-		// Waits 1.5 secs for Moving Out animation then load next level
-		GUIAnimSystemFREE.Instance.LoadLevel("GA FREE - Demo05 (960x600px)", 1.5f);
-		
-		gameObject.SendMessage("HideAllGUIs");
-	}
-	
-	// Open Demo Scene 6
-	public void ButtonOpenDemoScene6 ()
-	{
-		// Disable all buttons
-		GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+        gameObject.SendMessage("HideAllGUIs");
+    }
 
-		// Waits 1.5 secs for Moving Out animation then load next level
-		GUIAnimSystemFREE.Instance.LoadLevel("GA FREE - Demo06 (960x600px)", 1.5f);
-		
-		gameObject.SendMessage("HideAllGUIs");
-	}
-	
-	// Open Demo Scene 7
-	public void ButtonOpenDemoScene7 ()
-	{
-		// Disable all buttons
-		GUIAnimSystemFREE.Instance.EnableAllButtons(false);
-
-		// Waits 1.5 secs for Moving Out animation then load next level
-		GUIAnimSystemFREE.Instance.LoadLevel("GA FREE - Demo07 (960x600px)", 1.5f);
-		
-		gameObject.SendMessage("HideAllGUIs");
-	}
-	
-	// Open Demo Scene 8
-	public void ButtonOpenDemoScene8 ()
-	{
-		// Disable all buttons
-		GUIAnimSystemFREE.Instance.EnableAllButtons(false);
-
-		// Waits 1.5 secs for Moving Out animation then load next level
-		GUIAnimSystemFREE.Instance.LoadLevel("GA FREE - Demo08 (960x600px)", 1.5f);
-		
-		gameObject.SendMessage("HideAllGUIs");
-	}
-	
-	#endregion // UI Responder
+    #endregion // UI Responder
 }
