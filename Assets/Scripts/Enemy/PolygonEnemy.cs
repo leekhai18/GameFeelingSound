@@ -17,7 +17,7 @@ public class PolygonEnemy : EnemyBase
     {
         base.Awake();
         objCollider = GetComponentInChildren<Collider2D>();
-        scoreBase = 5;
+        scoreBase = ScoreManager.Instance.scorePolygonEnemy;
         isBlackHoleExisted = false;
     }
 
@@ -30,16 +30,16 @@ public class PolygonEnemy : EnemyBase
     {
         if (collision.tag == "Bullet")
         {
-            OnEnemyHit(100);
+            OnEnemyHit(PlayerManager.Instance.damageGun);
             collision.GetComponent<BulletBehaviour>().OnBulletHit();
         }
         else if (collision.tag == "Earth")
         {
             OnEnemyEscape();
-            ReturnPool();
         }
         else if (collision.tag == "Player")
         {
+            OnEnemyHit(PlayerManager.Instance.damageGun);
         }
     }
 
@@ -50,7 +50,7 @@ public class PolygonEnemy : EnemyBase
         if (timer > timeAvailable)
         {
             timer = 0;
-            ReturnPool();
+            OnEnemyEscape();
         }
 
         if (IsVisible == true && isBlackHoleExisted == false && level == 1)

@@ -6,13 +6,19 @@ public class KingBehaviour : Singleton<KingBehaviour>
 {
     public GameObject prefabEffectTriangleEnemy;
     public GameObject prefabEffectPolygonEnemy;
-    [SerializeField] float scaleX = 0.6f;
-    [SerializeField] float scaleY = 0.6f;
-    [SerializeField] float timeScale = 0.5f;
     bool isOnTriggerEnter2D = false;
 
     [SerializeField] float minParticleSpeed = 1;
     [SerializeField] float particleIncreeVelocity = 10;
+
+    public Collider2D coll;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        coll = GetComponent<Collider2D>();
+        coll.isTrigger = true;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,28 +26,32 @@ public class KingBehaviour : Singleton<KingBehaviour>
         {
             var prefabTriangle = PoolManager.SpawnObject(prefabEffectTriangleEnemy, collision.transform.position, Quaternion.identity);
             PoolManager.Instance.StartCoroutine(ReleasePrefabEffect(prefabTriangle));
-            ZoomIn();
-            PoolManager.Instance.StartCoroutine(ZoomOut());
 
-            isOnTriggerEnter2D = true;
+            ScoreManager.Instance.currentNumLife--;
         }
         if (collision.tag == "PolygonEnemy")
         {
             var prefabPolygon = PoolManager.SpawnObject(prefabEffectPolygonEnemy, collision.transform.position, Quaternion.identity);
             PoolManager.Instance.StartCoroutine(ReleasePrefabEffect(prefabPolygon));
-            ZoomIn();
-            PoolManager.Instance.StartCoroutine(ZoomOut());
 
-            isOnTriggerEnter2D = true;
+            ScoreManager.Instance.currentNumLife--;
         }
         if (collision.tag == "StarEnemy")
         {
-            ZoomIn();
-            PoolManager.Instance.StartCoroutine(ZoomOut());
             GameManager.Instance.SuckInBlackHole();
-
-            isOnTriggerEnter2D = true;
         }
+        if (collision.tag == "Bullet")
+        {
+            var prefabPolygon = PoolManager.SpawnObject(prefabEffectPolygonEnemy, collision.transform.position, Quaternion.identity);
+            PoolManager.Instance.StartCoroutine(ReleasePrefabEffect(prefabPolygon));
+
+            ScoreManager.Instance.currentNumLife--;
+        }
+
+        transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 0.5f);
+        PoolManager.Instance.StartCoroutine(ZoomOut());
+
+        isOnTriggerEnter2D = true;
     }
 
     private void Start()
@@ -75,22 +85,9 @@ public class KingBehaviour : Singleton<KingBehaviour>
         PoolManager.ReleaseObject(prefab.gameObject);
     }
 
-    void ZoomIn()
-    {
-        this.transform.localScale = new Vector3(scaleX, scaleY, 1);
-    }
-
     IEnumerator ZoomOut()
     {
-        yield return new WaitForSeconds(timeScale);
-        this.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-    }
-
-    public void RotateToTarget(Vector3 target)
-    {
-        Vector3 vectorToTarget = target - transform.position;
-        float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = q;
+        yield return new WaitForSeconds(0.5f);
+        transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.25f);
     }
 }

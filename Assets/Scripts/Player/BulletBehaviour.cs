@@ -30,6 +30,10 @@ public class BulletBehaviour : MonoBehaviour
         {
             this.OnBulletHit();
         }
+        if (collision.tag == "Bullet")
+        {
+            Finish();
+        }
     }
 
     public void Fire()

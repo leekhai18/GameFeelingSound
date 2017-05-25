@@ -9,6 +9,7 @@ public class PlayerManager : Singleton<PlayerManager>
     public int currentNumGun = 1;
 
     public bool isNumGunChange = false;
+    public int damageGun = 100;
 
     // Use this for initialization
     void Start ()

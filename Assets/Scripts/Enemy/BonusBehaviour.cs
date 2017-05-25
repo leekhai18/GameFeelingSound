@@ -41,7 +41,7 @@ public class BonusBehaviour : MonoBehaviour
             if (IsVisible == false)
                 return;
 
-            float ran = Random.Range(0.5f, listBonus.Length - 0.5f);
+            float ran = Random.Range(0.6f, listBonus.Length - 0.1f);
 
             GameObject bonus;
             
@@ -54,16 +54,23 @@ public class BonusBehaviour : MonoBehaviour
 
             if ((int)ran == 0)
             {
-                ScoreManager.Instance.currentNumLife++;
+                PoolManager.Instance.StartCoroutine(Increase());
                 PoolManager.SpawnObject(PoolManager.Instance.listPrefab[11].gameObject, Vector3.zero, Quaternion.identity);
             }
             if ((int)ran == 1)
             {
-                PlayerManager.Instance.currentNumGun++;
+                PoolManager.Instance.StartCoroutine(Increase());
                 PlayerManager.Instance.isNumGunChange = true;
             }
 
         }
+    }
+
+    IEnumerator Increase()
+    {
+        yield return new WaitForSeconds(2);
+
+        ScoreManager.Instance.currentNumLife++;
     }
 
     IEnumerator ReturnPool(GameObject gameObj, float time)

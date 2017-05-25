@@ -11,7 +11,7 @@ public class TriangleEnemy : EnemyBase
     public override void Awake()
     {
         base.Awake();
-        scoreBase = 10;
+        scoreBase = ScoreManager.Instance.scoreTriangleEnemy;
         isBlackHoleExisted = false;
     }
 
@@ -24,16 +24,16 @@ public class TriangleEnemy : EnemyBase
     {
         if (collision.tag == "Bullet")
         {
-            OnEnemyHit(100);
+            OnEnemyHit(PlayerManager.Instance.damageGun);
             collision.GetComponent<BulletBehaviour>().OnBulletHit();
         }
         else if (collision.tag == "Earth")
         {
             OnEnemyEscape();
-            ReturnPool();
         }
         else if (collision.tag == "Player")
         {
+            OnEnemyHit(PlayerManager.Instance.damageGun);
         }
     }
 
@@ -81,11 +81,11 @@ public class TriangleEnemy : EnemyBase
 
     public override void OnEnemyDie()
     {
+        base.OnEnemyKilled();
         base.OnEnemyDie();
         var effect = PoolManager.SpawnObject(explosion, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         effect.Play();
         PoolManager.Instance.StartCoroutine(ReleaseParticleExplosion(effect));
-        OnEnemyKilled();
     }
 
     IEnumerator ReleaseParticleExplosion(ParticleSystem explosion)

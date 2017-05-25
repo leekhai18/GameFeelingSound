@@ -89,12 +89,12 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void OnEnemyKilled()
     {
-
+        ScoreManager.Instance.currentScore += scoreBase;
     }
 
     public virtual void OnEnemyEscape()
     {
-
+        ReturnPool();
     }
     #endregion
 

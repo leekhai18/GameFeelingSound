@@ -12,6 +12,7 @@ public class StarEnemy : MonoBehaviour
     Rigidbody2D body;
     float timer;
     float timeAlive = 20;
+    int score = 100;
 
     Plane[] planes;
     Collider2D objCollider;
@@ -35,6 +36,7 @@ public class StarEnemy : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
         objCollider = GetComponent<Collider2D>();
+        score = ScoreManager.Instance.scoreStarEnemy;
     }
 
     void Start()
@@ -66,10 +68,16 @@ public class StarEnemy : MonoBehaviour
 
             ReturnPool();
         }
+
         if (collision.tag == "Bullet")
         {
-            OnEnemyHit(100);
+            OnEnemyHit(PlayerManager.Instance.damageGun);
             collision.GetComponent<BulletBehaviour>().OnBulletHit();
+        }
+
+        if (collision.tag == "Player")
+        {
+            OnEnemyHit(PlayerManager.Instance.damageGun);
         }
     }
 
@@ -85,6 +93,8 @@ public class StarEnemy : MonoBehaviour
 
     void OnEnemyDie()
     {
+        ScoreManager.Instance.currentScore += score;
+
         var explosionEffect = PoolManager.SpawnObject(explosionPrefab, transform.position, Quaternion.identity);
         PoolManager.Instance.StartCoroutine(ReleaseExplosionPrefab(explosionEffect));
         ReturnPool();
