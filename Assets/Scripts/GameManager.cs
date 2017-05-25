@@ -79,8 +79,24 @@ public class GameManager : Singleton<GameManager>
         HideAll(Vector3.zero);
         PoolManager.Instance.StartCoroutine(ReturnPool(explosion.gameObject, 4));
 
+        SaveBestScore(currentScore);
         GA_FREE_Demo02.Instance.ShowDialogGameOver();
         GameOverManager.Instance.ShowDialog();
+    }
+
+    void SaveBestScore(int score)
+    {
+        if (PlayerPrefs.HasKey("BestScore"))
+        {
+            if (PlayerPrefs.GetInt("BestScore") < score)
+                PlayerPrefs.SetInt("BestScore", score);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("BestScore", score);
+        }
+
+        PlayerPrefs.Save();
     }
 
     IEnumerator ReturnPool(GameObject gameObj, float time)
