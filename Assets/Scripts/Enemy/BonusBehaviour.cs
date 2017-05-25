@@ -8,6 +8,8 @@ public class BonusBehaviour : MonoBehaviour
 
     public GameObject[] listBonus;
 
+    bool isAvailable = false;
+
     //Check out Screen
     Plane[] planes;
     Collider2D objCollider;
@@ -25,6 +27,10 @@ public class BonusBehaviour : MonoBehaviour
         objCollider = GetComponent<Collider2D>();
     }
 
+    private void Start()
+    {
+    }
+
     private void Update()
     {
     }
@@ -32,16 +38,19 @@ public class BonusBehaviour : MonoBehaviour
     public void Setup()
     {
         PoolManager.Instance.StartCoroutine(ReturnPool(this.gameObject, timeAlive));
+        isAvailable = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Bullet")
+        if (collision.tag == "Bullet" && isAvailable == false)
         {
+            isAvailable = true;
+
             if (IsVisible == false)
                 return;
 
-            float ran = Random.Range(0.6f, listBonus.Length - 0.1f);
+            float ran = Random.Range(0.3f, listBonus.Length - 0.1f);
 
             GameObject bonus;
             
@@ -54,29 +63,32 @@ public class BonusBehaviour : MonoBehaviour
 
             if ((int)ran == 0)
             {
-                PoolManager.Instance.StartCoroutine(Increase());
-                PoolManager.SpawnObject(PoolManager.Instance.listPrefab[11].gameObject, Vector3.zero, Quaternion.identity);
+                PoolManager.Instance.StartCoroutine(IncreaseLife());
             }
             if ((int)ran == 1)
             {
-                PoolManager.Instance.StartCoroutine(Increase());
-                PlayerManager.Instance.isNumGunChange = true;
+                PoolManager.Instance.StartCoroutine(IncreaseNumGun());
             }
 
         }
     }
 
-    IEnumerator Increase()
+    IEnumerator IncreaseNumGun()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
+        PlayerManager.Instance.currentNumGun++;
+        PlayerManager.Instance.isNumGunChange = true;
+    }
 
-        ScoreManager.Instance.currentNumLife++;
+    IEnumerator IncreaseLife()
+    {
+        yield return new WaitForSeconds(1);
+        GameManager.Instance.LifeAdd();
     }
 
     IEnumerator ReturnPool(GameObject gameObj, float time)
     {
         yield return new WaitForSeconds(time);
-
         PoolManager.ReleaseObject(gameObj);
     }
 }

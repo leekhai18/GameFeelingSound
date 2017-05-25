@@ -29,7 +29,15 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-
+        if (collision.tag == "Bullet")
+        {
+            OnEnemyHit(PlayerManager.Instance.damageGun);
+            collision.GetComponent<BulletBehaviour>().OnBulletHit();
+        }
+        if (collision.tag == "Earth")
+        {
+            OnEnemyEscape();
+        }
     }
 
     public virtual void Start()
@@ -89,7 +97,7 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void OnEnemyKilled()
     {
-        ScoreManager.Instance.currentScore += scoreBase;
+        GameManager.Instance.ScoreAdd(scoreBase);
     }
 
     public virtual void OnEnemyEscape()

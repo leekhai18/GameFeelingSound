@@ -27,31 +27,34 @@ public class KingBehaviour : Singleton<KingBehaviour>
             var prefabTriangle = PoolManager.SpawnObject(prefabEffectTriangleEnemy, collision.transform.position, Quaternion.identity);
             PoolManager.Instance.StartCoroutine(ReleasePrefabEffect(prefabTriangle));
 
-            ScoreManager.Instance.currentNumLife--;
+            GameManager.Instance.LifeDel();
+
+            transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 0.5f);
+            PoolManager.Instance.StartCoroutine(ZoomOut());
+
+            isOnTriggerEnter2D = true;
         }
         if (collision.tag == "PolygonEnemy")
         {
             var prefabPolygon = PoolManager.SpawnObject(prefabEffectPolygonEnemy, collision.transform.position, Quaternion.identity);
             PoolManager.Instance.StartCoroutine(ReleasePrefabEffect(prefabPolygon));
 
-            ScoreManager.Instance.currentNumLife--;
+            GameManager.Instance.LifeDel();
+
+            transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 0.5f);
+            PoolManager.Instance.StartCoroutine(ZoomOut());
+
+            isOnTriggerEnter2D = true;
         }
         if (collision.tag == "StarEnemy")
         {
             GameManager.Instance.SuckInBlackHole();
+
+            transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 0.5f);
+            PoolManager.Instance.StartCoroutine(ZoomOut());
+
+            isOnTriggerEnter2D = true;
         }
-        if (collision.tag == "Bullet")
-        {
-            var prefabPolygon = PoolManager.SpawnObject(prefabEffectPolygonEnemy, collision.transform.position, Quaternion.identity);
-            PoolManager.Instance.StartCoroutine(ReleasePrefabEffect(prefabPolygon));
-
-            ScoreManager.Instance.currentNumLife--;
-        }
-
-        transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 0.5f);
-        PoolManager.Instance.StartCoroutine(ZoomOut());
-
-        isOnTriggerEnter2D = true;
     }
 
     private void Start()

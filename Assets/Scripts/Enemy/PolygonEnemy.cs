@@ -17,7 +17,7 @@ public class PolygonEnemy : EnemyBase
     {
         base.Awake();
         objCollider = GetComponentInChildren<Collider2D>();
-        scoreBase = ScoreManager.Instance.scorePolygonEnemy;
+        scoreBase = GameManager.Instance.scorePolygonEnemy;
         isBlackHoleExisted = false;
     }
 
@@ -28,19 +28,7 @@ public class PolygonEnemy : EnemyBase
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Bullet")
-        {
-            OnEnemyHit(PlayerManager.Instance.damageGun);
-            collision.GetComponent<BulletBehaviour>().OnBulletHit();
-        }
-        else if (collision.tag == "Earth")
-        {
-            OnEnemyEscape();
-        }
-        else if (collision.tag == "Player")
-        {
-            OnEnemyHit(PlayerManager.Instance.damageGun);
-        }
+        base.OnTriggerEnter2D(collision);
     }
 
     public override void Update()

@@ -20,7 +20,8 @@ public class SpectrumCircle : Singleton<SpectrumCircle>
             float angle = i * Mathf.PI * 2 / numOfMelody;
             var pos = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
 
-            int index = (ScoreManager.Instance.currentNumLife - 1) < 3 ? (ScoreManager.Instance.currentNumLife - 1) : 2;
+            int index = (GameManager.Instance.CurrentNumLife - 1) < 3 ? (GameManager.Instance.CurrentNumLife - 1) : 2;
+            index = (index < 0) ? 0 : index;
             var go = Instantiate(listMelodyPrefab[index], pos, Quaternion.Euler(0, 0, GameUtils.RadToDeg(angle) - 90), transform) as GameObject;
 
             listMelody.Add(go);

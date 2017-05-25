@@ -21,7 +21,7 @@ using System.Collections;
 // This class handles 8 buttons for changing scene.
 // ######################################################################
 
-public class GA_FREE_OpenOtherScene : MonoBehaviour
+public class GA_FREE_OpenOtherScene : Singleton<GA_FREE_OpenOtherScene>
 {
 	
 	// ########################################
@@ -65,9 +65,21 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
         // Disable all buttons
         GUIAnimSystemFREE.Instance.EnableAllButtons(false);
 
-        // Waits 1.5 secs for Moving Out animation then load next level
+        // Waits 0 secs for Moving Out animation then load next level
         GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 0);
 
+        //gameObject.SendMessage("HideAllGUIs");
+    }
+
+    //Open Home Scene
+    public void ButtonOpenHomeScene()
+    {
+        // Disable all buttons
+        GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+
+        // Waits 0 secs for Moving Out animation then load next level
+        GUIAnimSystemFREE.Instance.LoadLevel("Home", 0);
+   
         gameObject.SendMessage("HideAllGUIs");
     }
 

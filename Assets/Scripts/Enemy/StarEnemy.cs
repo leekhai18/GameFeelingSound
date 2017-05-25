@@ -6,11 +6,8 @@ public class StarEnemy : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] int health;
-    [SerializeField]
-    [Range(0.0f, 2.0f)]
-    float timeShootDelay = 1;
+
     Rigidbody2D body;
-    float timer;
     float timeAlive = 20;
     int score = 100;
 
@@ -20,8 +17,6 @@ public class StarEnemy : MonoBehaviour
     public GameObject blackHole;
     public GameObject explosionPrefab;
     public GameObject bonousPrefab;
-    public GameObject bulletPrefab;
-    public Transform[] gunPos;
 
     bool IsVisible
     {
@@ -36,7 +31,7 @@ public class StarEnemy : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
         objCollider = GetComponent<Collider2D>();
-        score = ScoreManager.Instance.scoreStarEnemy;
+        score = GameManager.Instance.scoreStarEnemy;
     }
 
     void Start()
@@ -47,13 +42,6 @@ public class StarEnemy : MonoBehaviour
     void Update()
     {
         Fly();
-
-        timer += Time.deltaTime;
-        if (timer >= timeShootDelay)
-        {
-            Fire();
-            timer = 0;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -74,11 +62,6 @@ public class StarEnemy : MonoBehaviour
             OnEnemyHit(PlayerManager.Instance.damageGun);
             collision.GetComponent<BulletBehaviour>().OnBulletHit();
         }
-
-        if (collision.tag == "Player")
-        {
-            OnEnemyHit(PlayerManager.Instance.damageGun);
-        }
     }
 
     void OnEnemyHit(int damage)
@@ -93,7 +76,7 @@ public class StarEnemy : MonoBehaviour
 
     void OnEnemyDie()
     {
-        ScoreManager.Instance.currentScore += score;
+        GameManager.Instance.ScoreAdd(score);
 
         var explosionEffect = PoolManager.SpawnObject(explosionPrefab, transform.position, Quaternion.identity);
         PoolManager.Instance.StartCoroutine(ReleaseExplosionPrefab(explosionEffect));
@@ -115,22 +98,6 @@ public class StarEnemy : MonoBehaviour
         body.velocity = Vector2.zero;
     }
 
-    public void Fire()
-    {
-        for (int i = 0; i < gunPos.Length; i++)
-        {
-            var bulletScrip = PoolManager.SpawnObject(bulletPrefab, gunPos[i].transform.position, gunPos[i].transform.rotation).GetComponent<BulletBehaviour>();
-            bulletScrip.Fire();
-            PoolManager.Instance.StartCoroutine(ReleaseBullet(bulletScrip));
-        }
-    }
-
-    IEnumerator ReleaseBullet(BulletBehaviour bullet)
-    {
-        yield return new WaitForSeconds(0.7f);
-        PoolManager.ReleaseObject(bullet.gameObject);
-    }
-
     public void Fly()
     {
         this.transform.Translate(Vector3.up * Time.deltaTime * speed);
@@ -142,11 +109,5 @@ public class StarEnemy : MonoBehaviour
         float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = q;
-    }
-
-    public void Finish()
-    {
-        PoolManager.ReleaseObject(this.gameObject);
-        body.velocity = Vector3.zero;
     }
 }

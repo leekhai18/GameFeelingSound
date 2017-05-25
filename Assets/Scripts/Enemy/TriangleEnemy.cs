@@ -11,7 +11,7 @@ public class TriangleEnemy : EnemyBase
     public override void Awake()
     {
         base.Awake();
-        scoreBase = ScoreManager.Instance.scoreTriangleEnemy;
+        scoreBase = GameManager.Instance.scoreTriangleEnemy;
         isBlackHoleExisted = false;
     }
 
@@ -22,19 +22,7 @@ public class TriangleEnemy : EnemyBase
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Bullet")
-        {
-            OnEnemyHit(PlayerManager.Instance.damageGun);
-            collision.GetComponent<BulletBehaviour>().OnBulletHit();
-        }
-        else if (collision.tag == "Earth")
-        {
-            OnEnemyEscape();
-        }
-        else if (collision.tag == "Player")
-        {
-            OnEnemyHit(PlayerManager.Instance.damageGun);
-        }
+        base.OnTriggerEnter2D(collision);
     }
 
     public override void Update()

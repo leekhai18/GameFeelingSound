@@ -150,79 +150,87 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	
 	public void OnButton_Dialog1()
 	{			
-		// MoveOut m_Dialog1
-		m_Dialog1.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
-		// Disable m_Dialog1 for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_Dialog1.gameObject, 2.5f));
-
-        // MoveOut All
-        OnButton_MoveOutAllDialogs();
-    }
-	
-	public void OnButton_Dialog2()
-	{
-		// MoveOut m_Dialog2
+		// Remain m_Dialog1
 		m_Dialog2.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
-		// Disable m_Dialog2 for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_Dialog2.gameObject, 2.5f));
+        m_Dialog3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 
-        // MoveOut All
-        OnButton_MoveOutAllDialogs();
+        StartCoroutine(GoToScene_Dialog1());
+    }
+
+    public void OnButton_Dialog2()
+	{
+        // Remain m_Dialog2
+        m_Dialog1.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        m_Dialog3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+
+        StartCoroutine(GoToScene_Dialog2());
     }
 
     public void OnButton_Dialog3()
 	{
-		// MoveOut m_Dialog3
-		m_Dialog3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
-		// Disable m_Dialog3 for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_Dialog3.gameObject, 2.5f));
+        // Remain m_Dialog3
+        m_Dialog2.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        m_Dialog1.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 
-        // MoveOut All
-        OnButton_MoveOutAllDialogs();
+        StartCoroutine(GoToScene_Dialog3());
     }
 
     public void OnButton_Dialog4()
 	{
-		// MoveOut m_Dialog4
-		m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
-		// Disable m_Dialog4 for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_Dialog4.gameObject, 2.5f));
+        // Remain m_Dialog4
+        m_Dialog2.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        m_Dialog3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        m_Dialog1.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 
-        // MoveOut All
-        OnButton_MoveOutAllDialogs();
+        StartCoroutine(GoToScene_Dialog4());
     }
 
     public void OnButton_MoveOutAllDialogs()
-	{		
-		// Disable m_Dialog1, m_Dialog2, m_Dialog3, m_Dialog4 for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_Dialog1.gameObject, 2.5f));
-		StartCoroutine(DisableButtonForSeconds(m_Dialog2.gameObject, 2.5f));
-		StartCoroutine(DisableButtonForSeconds(m_Dialog3.gameObject, 2.5f));
-		StartCoroutine(DisableButtonForSeconds(m_Dialog4.gameObject, 2.5f));
-
+	{
 		// MoveOut dialogs
 		m_Dialog1.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Dialog2.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Dialog3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Dialog4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);		
 	}
-	
-	#endregion // UI Responder
-	
-	// ########################################
-	// Move dialog functions
-	// ########################################
-	
-	#region Move Dialog
-	
-	// MoveIn m_Dialog1
-	IEnumerator Dialog1_MoveIn()
+
+
+    IEnumerator GoToScene_Dialog1()
+    {
+        yield return new WaitForSeconds(2);
+        GA_FREE_OpenOtherScene.Instance.ButtonOpenSongScene();
+    }
+    IEnumerator GoToScene_Dialog2()
+    {
+        yield return new WaitForSeconds(2);
+        GA_FREE_OpenOtherScene.Instance.ButtonOpenSongScene();
+    }
+    IEnumerator GoToScene_Dialog3()
+    {
+        yield return new WaitForSeconds(2);
+        GA_FREE_OpenOtherScene.Instance.ButtonOpenSongScene();
+    }
+    IEnumerator GoToScene_Dialog4()
+    {
+        yield return new WaitForSeconds(2);
+        GA_FREE_OpenOtherScene.Instance.ButtonOpenSongScene();
+    }
+
+    #endregion // UI Responder
+
+    // ########################################
+    // Move dialog functions
+    // ########################################
+
+    #region Move Dialog
+
+    // MoveIn m_Dialog1
+    IEnumerator Dialog1_MoveIn()
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1);
 		
 		// Reset children of m_Dialog1
 		m_Dialog1.ResetAllChildren();
@@ -234,7 +242,7 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	// MoveIn m_Dialog2
 	IEnumerator Dialog2_MoveIn()
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1);
 		
 		// Reset children of m_Dialog2
 		m_Dialog2.ResetAllChildren();
@@ -246,7 +254,7 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	// MoveIn m_Dialog3
 	IEnumerator Dialog3_MoveIn()
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1);
 		
 		// Reset children of m_Dialog3
 		m_Dialog3.ResetAllChildren();
@@ -258,7 +266,7 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	// MoveIn m_Dialog4
 	IEnumerator Dialog4_MoveIn()
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1);
 		
 		// Reset children of m_Dialog4
 		m_Dialog4.ResetAllChildren();
@@ -266,6 +274,8 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		// Moves m_Dialog4 back to screen to screen
 		m_Dialog4.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 	}
-	
-	#endregion // Move Dialog
+
+    #endregion // Move Dialog
+
+
 }
