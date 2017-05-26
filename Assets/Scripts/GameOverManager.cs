@@ -21,17 +21,40 @@ public class GameOverManager : Singleton<GameOverManager>
 
     public void ShowDialog()
     {
-        PoolManager.Instance.StartCoroutine(CounterScore(Convert.ToInt32(GameManager.Instance.scoreCount.text)));
-        bestScore.text = PlayerPrefs.GetInt("BestScore", 0).ToString();
+        PoolManager.Instance.StartCoroutine(AnimationCount(Convert.ToInt32(GameManager.Instance.scoreCount.text)));
     }
 
-    IEnumerator CounterScore(int score)
+    IEnumerator AnimationCount(int score)
     {
-       
-        for (int i = 0; i < score + 1; i += 5)
+        int best = PlayerPrefs.GetInt("BestScore" + AudioManager.Instance.GetIndexCurrentLv.ToString());
+
+        if (score == 0)
         {
-            yield return new WaitForSecondsRealtime(5.0f / score);
-            scoreCount.text = i.ToString();
+            scoreCount.text = "0";
+            bestScore.text = best.ToString();
+        }
+        else
+        {
+            if (score < best)
+            {
+                bestScore.text = best.ToString();
+
+                for (int i = 0; i < score + 1; i += 5)
+                {
+                    yield return new WaitForSecondsRealtime(5.0f / score);
+                    scoreCount.text = i.ToString();
+                }
+            }
+            else
+            {
+                for (int i = 0; i < score + 1; i += 5)
+                {
+                    yield return new WaitForSecondsRealtime(5.0f / score);
+                    scoreCount.text = i.ToString();
+                }
+
+                bestScore.text = best.ToString();
+            }
         }
     }
 

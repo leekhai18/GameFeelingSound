@@ -6,6 +6,7 @@ public class StarEnemy : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] int health;
+    private int storeHealth;
 
     Rigidbody2D body;
     float timeAlive = 20;
@@ -32,6 +33,7 @@ public class StarEnemy : MonoBehaviour
         planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
         objCollider = GetComponent<Collider2D>();
         score = GameManager.Instance.scoreStarEnemy;
+        storeHealth = health;
     }
 
     void Start()
@@ -96,6 +98,7 @@ public class StarEnemy : MonoBehaviour
     {
         PoolManager.ReleaseObject(this.gameObject);
         body.velocity = Vector2.zero;
+        health = storeHealth;
     }
 
     public void Fly()

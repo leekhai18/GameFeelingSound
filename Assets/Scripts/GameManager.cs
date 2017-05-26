@@ -79,21 +79,32 @@ public class GameManager : Singleton<GameManager>
         HideAll(Vector3.zero);
         PoolManager.Instance.StartCoroutine(ReturnPool(explosion.gameObject, 4));
 
-        SaveBestScore(currentScore);
+        PoolManager.Instance.StartCoroutine(ShowDialogGameOver());
+
+        PlayerManager.Instance.gameObject.SetActive(false);
+    }
+
+    IEnumerator ShowDialogGameOver()
+    {
+        yield return new WaitForSeconds(1);
+
+        SaveBestScore(currentScore, AudioManager.Instance.GetIndexCurrentLv);
         GA_FREE_Demo02.Instance.ShowDialogGameOver();
         GameOverManager.Instance.ShowDialog();
     }
 
-    void SaveBestScore(int score)
+    void SaveBestScore(int score, int indexLv)
     {
-        if (PlayerPrefs.HasKey("BestScore"))
+        string key = "BestScore" + indexLv.ToString();
+
+        if (PlayerPrefs.HasKey(key))
         {
-            if (PlayerPrefs.GetInt("BestScore") < score)
-                PlayerPrefs.SetInt("BestScore", score);
+            if (PlayerPrefs.GetInt(key) < score)
+                PlayerPrefs.SetInt(key, score);
         }
         else
         {
-            PlayerPrefs.SetInt("BestScore", score);
+            PlayerPrefs.SetInt(key, score);
         }
 
         PlayerPrefs.Save();
@@ -111,8 +122,7 @@ public class GameManager : Singleton<GameManager>
         var blackHole = GameObject.FindGameObjectWithTag("BlackHoleKillKing");
         HideAll(blackHole.transform.position);
 
-        GA_FREE_Demo02.Instance.ShowDialogGameOver();
-        GameOverManager.Instance.ShowDialog();
+        PoolManager.Instance.StartCoroutine(ShowDialogGameOver());
     }
 
     void HideAll(Vector3 position)

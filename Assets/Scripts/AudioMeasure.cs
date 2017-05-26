@@ -27,8 +27,7 @@ public class AudioMeasure : Singleton<AudioMeasure>
     {
         base.Awake();
 
-        audioSource.clip = AudioManager.Instance.audioBackgroudLv1;
-        
+        audioSource.clip = AudioManager.Instance.GetAudioSource;
     }
 
     void Start()
