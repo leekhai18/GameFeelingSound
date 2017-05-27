@@ -60,6 +60,12 @@ public class GA_FREE_OpenOtherScene : Singleton<GA_FREE_OpenOtherScene>
         gameObject.SendMessage("HideAllGUIs");
     }
 
+    IEnumerator HideDialogLoading()
+    {
+        yield return new WaitForSeconds(2);
+        LoadingManager.Instance.HideDialog();
+    }
+
     // Open Song lv1 Scene
     public void ButtonOpenSongLv1()
     {
@@ -69,8 +75,12 @@ public class GA_FREE_OpenOtherScene : Singleton<GA_FREE_OpenOtherScene>
         // Disable all buttons
         GUIAnimSystemFREE.Instance.EnableAllButtons(false);
 
+        // Loading show and hide
+        LoadingManager.Instance.ShowDialog();
+        StartCoroutine(HideDialogLoading());
+
         // Waits 0 secs for Moving Out animation then load next level
-        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 0);
+        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 2);
 
         //gameObject.SendMessage("HideAllGUIs");
     }
@@ -84,8 +94,13 @@ public class GA_FREE_OpenOtherScene : Singleton<GA_FREE_OpenOtherScene>
         // Disable all buttons
         GUIAnimSystemFREE.Instance.EnableAllButtons(false);
 
+        // Loading show and hide
+        LoadingManager.Instance.ShowDialog();
+        StartCoroutine(HideDialogLoading());
+
+
         // Waits 0 secs for Moving Out animation then load next level
-        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 0);
+        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 2);
 
         //gameObject.SendMessage("HideAllGUIs");
     }
@@ -99,8 +114,13 @@ public class GA_FREE_OpenOtherScene : Singleton<GA_FREE_OpenOtherScene>
         // Disable all buttons
         GUIAnimSystemFREE.Instance.EnableAllButtons(false);
 
+        // Loading show and hide
+        LoadingManager.Instance.ShowDialog();
+        StartCoroutine(HideDialogLoading());
+
+
         // Waits 0 secs for Moving Out animation then load next level
-        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 0);
+        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 2);
 
         //gameObject.SendMessage("HideAllGUIs");
     }
@@ -115,8 +135,12 @@ public class GA_FREE_OpenOtherScene : Singleton<GA_FREE_OpenOtherScene>
         // Disable all buttons
         GUIAnimSystemFREE.Instance.EnableAllButtons(false);
 
+        // Loading show and hide
+        LoadingManager.Instance.ShowDialog();
+        StartCoroutine(HideDialogLoading());
+
         // Waits 0 secs for Moving Out animation then load next level
-        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 0);
+        GUIAnimSystemFREE.Instance.LoadLevel("SpectrumCircle", 2);
 
         //gameObject.SendMessage("HideAllGUIs");
     }
@@ -124,10 +148,10 @@ public class GA_FREE_OpenOtherScene : Singleton<GA_FREE_OpenOtherScene>
     // Load Current Scene
     public void LoadCurrentScence()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
         // Disable all buttons
         GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 

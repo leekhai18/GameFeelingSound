@@ -6,6 +6,8 @@ public class BonusBehaviour : MonoBehaviour
 {
     float timeAlive = 10;
 
+    int kindOfBonus;
+
     public GameObject[] listBonus;
 
     bool isAvailable = false;
@@ -35,10 +37,11 @@ public class BonusBehaviour : MonoBehaviour
     {
     }
 
-    public void Setup()
+    public void Setup(int kindBonus)
     {
         PoolManager.Instance.StartCoroutine(ReturnPool(this.gameObject, timeAlive));
         isAvailable = false;
+        kindOfBonus = kindBonus;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -50,22 +53,20 @@ public class BonusBehaviour : MonoBehaviour
             if (IsVisible == false)
                 return;
 
-            float ran = Random.Range(0.3f, listBonus.Length - 0.1f);
-
             GameObject bonus;
             
-            bonus = PoolManager.SpawnObject(listBonus[(int)ran], transform.position, Quaternion.identity);
+            bonus = PoolManager.SpawnObject(listBonus[kindOfBonus], transform.position, Quaternion.identity);
             bonus.GetComponent<ParticleSystem>().startSize = 3;
             bonus.transform.DOMove(KingBehaviour.Instance.transform.position, 2);
 
             PoolManager.Instance.StartCoroutine(ReturnPool(bonus.gameObject, 2.1f));
             PoolManager.Instance.StartCoroutine(ReturnPool(this.gameObject, 0));
 
-            if ((int)ran == 0)
+            if (kindOfBonus == 0)
             {
                 PoolManager.Instance.StartCoroutine(IncreaseLife());
             }
-            if ((int)ran == 1)
+            if (kindOfBonus == 1)
             {
                 PoolManager.Instance.StartCoroutine(IncreaseNumGun());
             }

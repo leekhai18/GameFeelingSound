@@ -15,7 +15,9 @@ public class AudioManager : Singleton<AudioManager>
     public AudioClip earthHit;
     public AudioClip earthDie;
     public AudioClip blackHoleAppear;
+    public AudioClip blackHoleAppearLarge;
     public AudioClip earthSuckedIntoBH;
+    public AudioClip collectionItems;
 
     public List<AudioSource> listAudioSource;
 

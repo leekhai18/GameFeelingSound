@@ -200,22 +200,22 @@ public class GA_FREE_Demo05 : MonoBehaviour
 
     IEnumerator GoToScene_Dialog1()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         GA_FREE_OpenOtherScene.Instance.ButtonOpenSongLv1();
     }
     IEnumerator GoToScene_Dialog2()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         GA_FREE_OpenOtherScene.Instance.ButtonOpenSongLv2();
     }
     IEnumerator GoToScene_Dialog3()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         GA_FREE_OpenOtherScene.Instance.ButtonOpenSongLv3();
     }
     IEnumerator GoToScene_Dialog4()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         GA_FREE_OpenOtherScene.Instance.ButtonOpenSongLv4();
     }
 

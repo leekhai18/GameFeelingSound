@@ -31,6 +31,8 @@ public class TriangleEnemy : EnemyBase
 
         if (IsVisible == true && isBlackHoleExisted == false)
         {
+            AudioManager.Instance.PlayEffectSound(AudioManager.Instance.blackHoleAppear);
+
             var blackH = PoolManager.SpawnObject(blackHole, transform.position, Quaternion.identity);
             isBlackHoleExisted = true;
             PoolManager.Instance.StartCoroutine(ReleaseBlackHole(blackH));

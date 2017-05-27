@@ -69,7 +69,7 @@ public class GA_FREE_Demo02 : Singleton<GA_FREE_Demo02>
 		GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(m_Canvas, false);
 	}
 
-    public void ShowDialogGameOver()
+    public void ShowDialog()
     {
         // MoveIn Dialog
         StartCoroutine(DialogMoveIn());

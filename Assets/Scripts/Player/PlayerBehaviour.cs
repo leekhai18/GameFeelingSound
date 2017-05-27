@@ -81,7 +81,9 @@ public class PlayerBehaviour : Singleton<PlayerBehaviour>
         }
 
         UpdateRotaion();
-        UpdateFire();
+
+        if (bullet != null)
+            UpdateFire();
     }
 
     void UpdateFire()

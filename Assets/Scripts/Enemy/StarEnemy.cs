@@ -17,7 +17,8 @@ public class StarEnemy : MonoBehaviour
 
     public GameObject blackHole;
     public GameObject explosionPrefab;
-    public GameObject bonousPrefab;
+    public GameObject[] listBonousPrefab;
+     
 
     bool IsVisible
     {
@@ -51,10 +52,12 @@ public class StarEnemy : MonoBehaviour
         if (collision.tag == "Earth")
         {
             var blackH = PoolManager.SpawnObject(blackHole, transform.position, Quaternion.identity);
+
             blackH.tag = "BlackHoleKillKing";
 
             blackH.transform.DOScale(Vector3.zero, 0);
             blackH.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 3);
+            AudioManager.Instance.PlayEffectSound(AudioManager.Instance.blackHoleAppearLarge);
 
             ReturnPool();
         }
@@ -84,8 +87,10 @@ public class StarEnemy : MonoBehaviour
         PoolManager.Instance.StartCoroutine(ReleaseExplosionPrefab(explosionEffect));
         ReturnPool();
 
-        var bonus = PoolManager.SpawnObject(bonousPrefab, transform.position, Quaternion.identity).GetComponent<BonusBehaviour>();
-        bonus.Setup();
+        float ran = Random.Range(0.3f, listBonousPrefab.Length - 0.1f);
+
+        var bonus = PoolManager.SpawnObject(listBonousPrefab[(int)ran], transform.position, Quaternion.identity).GetComponent<BonusBehaviour>();
+        bonus.Setup((int)ran);
     }
 
     IEnumerator ReleaseExplosionPrefab(GameObject explosionPre)

@@ -86,10 +86,10 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator ShowDialogGameOver()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
         SaveBestScore(currentScore, AudioManager.Instance.GetIndexCurrentLv);
-        GA_FREE_Demo02.Instance.ShowDialogGameOver();
+        GA_FREE_Demo02.Instance.ShowDialog();
         GameOverManager.Instance.ShowDialog();
     }
 
@@ -121,6 +121,8 @@ public class GameManager : Singleton<GameManager>
     {
         var blackHole = GameObject.FindGameObjectWithTag("BlackHoleKillKing");
         HideAll(blackHole.transform.position);
+
+        AudioManager.Instance.PlayEffectSound(AudioManager.Instance.earthSuckedIntoBH);
 
         PoolManager.Instance.StartCoroutine(ShowDialogGameOver());
     }
