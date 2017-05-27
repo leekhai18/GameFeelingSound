@@ -68,6 +68,9 @@ public class GameManager : Singleton<GameManager>
                 GameOver();
             }
 
+            // Setup SoundEffect EarthHit
+            AudioManager.Instance.PlayEffectSound(AudioManager.Instance.earthHit);
+
             PoolManager.ReleaseObject(PoolManager.Instance.listPrefab[11].gameObject);
             PoolManager.SpawnObject(PoolManager.Instance.listPrefab[11].gameObject, Vector3.zero, Quaternion.identity);
         }
@@ -82,6 +85,9 @@ public class GameManager : Singleton<GameManager>
         PoolManager.Instance.StartCoroutine(ShowDialogGameOver());
 
         PlayerManager.Instance.gameObject.SetActive(false);
+
+        //Setup SoundEffect EarthDie
+        AudioManager.Instance.PlayEffectSound(AudioManager.Instance.earthDie);
     }
 
     IEnumerator ShowDialogGameOver()

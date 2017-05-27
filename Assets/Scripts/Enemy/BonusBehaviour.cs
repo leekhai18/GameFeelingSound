@@ -79,12 +79,16 @@ public class BonusBehaviour : MonoBehaviour
         yield return new WaitForSeconds(1);
         PlayerManager.Instance.currentNumGun++;
         PlayerManager.Instance.isNumGunChange = true;
+
+        AudioManager.Instance.PlayEffectSound(AudioManager.Instance.collectionItems);
     }
 
     IEnumerator IncreaseLife()
     {
         yield return new WaitForSeconds(1);
         GameManager.Instance.LifeAdd();
+
+        AudioManager.Instance.PlayEffectSound(AudioManager.Instance.collectionItems);
     }
 
     IEnumerator ReturnPool(GameObject gameObj, float time)

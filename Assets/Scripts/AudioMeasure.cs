@@ -27,7 +27,7 @@ public class AudioMeasure : Singleton<AudioMeasure>
     {
         base.Awake();
 
-        audioSource.clip = AudioManager.Instance.GetAudioSource;
+        //audioSource.clip = AudioManager.Instance.GetAudioSource;
     }
 
     void Start()
@@ -35,7 +35,7 @@ public class AudioMeasure : Singleton<AudioMeasure>
         _samples = new float[QSamples];
         _spectrum = new float[QSamples];
         _fSample = AudioSettings.outputSampleRate;
-        audioSource.Play();
+        //audioSource.Play();
     }
 
     void Update()

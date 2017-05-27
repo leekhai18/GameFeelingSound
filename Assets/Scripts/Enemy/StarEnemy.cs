@@ -64,6 +64,8 @@ public class StarEnemy : MonoBehaviour
 
         if (collision.tag == "Bullet")
         {
+            AudioManager.Instance.PlayEffectSound(AudioManager.Instance.bulletHit);
+
             OnEnemyHit(PlayerManager.Instance.damageGun);
             collision.GetComponent<BulletBehaviour>().OnBulletHit();
         }
