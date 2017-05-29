@@ -36,14 +36,6 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	// Canvas
 	public Canvas m_Canvas;
 	
-	// GUIAnimFREE objects of title text
-	public GUIAnimFREE m_Title1;
-	public GUIAnimFREE m_Title2;
-	
-	// GUIAnimFREE objects of top and bottom bars
-	public GUIAnimFREE m_TopBar;
-	public GUIAnimFREE m_BottomBar;
-	
 	// GUIAnimFREE object of dialogs
 	public GUIAnimFREE m_Dialog;
 	public GUIAnimFREE m_DialogButtons;
@@ -78,10 +70,6 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
 	void Start ()
 	{
-		// MoveIn m_TopBar and m_BottomBar
-		m_TopBar.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_BottomBar.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
 		// MoveIn m_Title1 and m_Title2
 		StartCoroutine(MoveInTitleGameObjects());
 
@@ -108,10 +96,6 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	IEnumerator MoveInTitleGameObjects()
 	{
 		yield return new WaitForSeconds(1.0f);
-		
-		// MoveIn m_Title1 and m_Title2
-		m_Title1.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
-		m_Title2.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
 		
 		// MoveIn all dialogs and buttons
 		StartCoroutine(MoveInPrimaryButtons());
@@ -148,23 +132,6 @@ public class GA_FREE_Demo07 : MonoBehaviour
 		m_Button2.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Button3.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 		m_Button4.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
-		// MoveOut m_Title1 and m_Title2
-		StartCoroutine(HideTitleTextMeshes());
-	}
-	
-	// MoveOut m_Title1 and m_Title2
-	IEnumerator HideTitleTextMeshes()
-	{
-		yield return new WaitForSeconds(1.0f);
-		
-		// MoveOut m_Title1 and m_Title2
-		m_Title1.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
-		m_Title2.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
-		
-		// MoveOut m_TopBar and m_BottomBar
-		m_TopBar.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_BottomBar.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 	}
 	
 	#endregion // MoveIn/MoveOut

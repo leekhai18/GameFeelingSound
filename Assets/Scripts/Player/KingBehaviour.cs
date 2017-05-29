@@ -33,6 +33,10 @@ public class KingBehaviour : Singleton<KingBehaviour>
             PoolManager.Instance.StartCoroutine(ZoomOut());
 
             isOnTriggerEnter2D = true;
+
+            GameManager.Instance.numOfCollition++;
+
+            DescreaseNumGun();
         }
         if (collision.tag == "PolygonEnemy")
         {
@@ -45,6 +49,10 @@ public class KingBehaviour : Singleton<KingBehaviour>
             PoolManager.Instance.StartCoroutine(ZoomOut());
 
             isOnTriggerEnter2D = true;
+
+            GameManager.Instance.numOfCollition++;
+
+            DescreaseNumGun();
         }
         if (collision.tag == "StarEnemy")
         {
@@ -54,6 +62,17 @@ public class KingBehaviour : Singleton<KingBehaviour>
             PoolManager.Instance.StartCoroutine(ZoomOut());
 
             isOnTriggerEnter2D = true;
+
+            GameManager.Instance.numOfCollition = 100;
+        }
+    }
+
+    void DescreaseNumGun()
+    {
+        if (PlayerManager.Instance.currentNumGun > 1)
+        {
+            PlayerManager.Instance.currentNumGun--;
+            PlayerManager.Instance.isNumGunChange = true;
         }
     }
 

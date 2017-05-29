@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 96a615bfa28a0fb4fb1549a517855d82
-timeCreated: 1495888072
+timeCreated: 1495923642
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -420,7 +420,7 @@ TextureImporter:
         width: 22
         height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5104044, y: 0.3029351}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -493,12 +493,12 @@ TextureImporter:
       name: bullets_27
       rect:
         serializedVersion: 2
-        x: 170
+        x: 172
         y: 308
         width: 20
         height: 26
       alignment: 9
-      pivot: {x: 0.49368668, y: 0.26544777}
+      pivot: {x: 0.385466, y: 0.21839435}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

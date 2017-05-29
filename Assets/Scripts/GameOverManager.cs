@@ -21,10 +21,10 @@ public class GameOverManager : Singleton<GameOverManager>
 
     public void ShowDialog()
     {
-        PoolManager.Instance.StartCoroutine(AnimationCount(Convert.ToInt32(GameManager.Instance.scoreCount.text)));
+        PoolManager.Instance.StartCoroutine(AnimationCountScore(Convert.ToInt32(GameManager.Instance.scoreCount.text)));
     }
 
-    IEnumerator AnimationCount(int score)
+    IEnumerator AnimationCountScore(int score)
     {
         int best = PlayerPrefs.GetInt("BestScore" + AudioManager.Instance.GetIndexCurrentLv.ToString());
 

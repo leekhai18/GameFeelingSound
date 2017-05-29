@@ -167,5 +167,18 @@ public class GA_FREE_OpenOtherScene : Singleton<GA_FREE_OpenOtherScene>
         gameObject.SendMessage("HideAllGUIs");
     }
 
+    //Open Tutorial Scene
+    public void ButtonOpenTutorialScene()
+    {
+        // Disable all buttons
+        GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+
+        // Waits 0 secs for Moving Out animation then load next level
+        GUIAnimSystemFREE.Instance.LoadLevel("Tutorial", 0);
+
+        gameObject.SendMessage("HideAllGUIs");
+    }
+
+
     #endregion // UI Responder
 }

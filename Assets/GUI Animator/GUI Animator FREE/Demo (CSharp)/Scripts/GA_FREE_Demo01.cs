@@ -38,15 +38,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 
     // GUIAnimFREE objects of Middle button play
     public GUIAnimFREE m_MiddleCenter_A;
+    public GUIAnimFREE m_MiddleCenter_B;
 
 	// GUIAnimFREE objects of title text
 	public GUIAnimFREE m_Title1;
-	public GUIAnimFREE m_Title2;
-			
-	// GUIAnimFREE objects of BottomLeft buttons
-	public GUIAnimFREE m_BottomLeft_A;
-	public GUIAnimFREE m_BottomLeft_B;
-	
+				
 	// Toggle state of TopLeft, BottomLeft and BottomLeft buttons
 	bool m_BottomLeft_IsOn = false;
 	
@@ -109,7 +105,6 @@ public class GA_FREE_Demo01 : MonoBehaviour
 
 		// MoveIn m_Title1 and m_Title2
 		m_Title1.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
-		m_Title2.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
 		
 		// MoveIn all primary buttons
 		StartCoroutine(MoveInPrimaryButtons());
@@ -121,24 +116,21 @@ public class GA_FREE_Demo01 : MonoBehaviour
 		yield return new WaitForSeconds(1.0f);
 
 		// MoveIn all primary buttons
-		m_BottomLeft_A.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
         m_MiddleCenter_A.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
+        m_MiddleCenter_B.MoveIn(GUIAnimSystemFREE.eGUIMove.Self);
 
-		// Enable all scene switch buttons
-		StartCoroutine(EnableAllDemoButtons());
+        // Enable all scene switch buttons
+        StartCoroutine(EnableAllDemoButtons());
 	}
 
 	// MoveOut all primary buttons
 	public void HideAllGUIs()
 	{
-		m_BottomLeft_A.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		m_MiddleCenter_A.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
-		
-		if(m_BottomLeft_IsOn == true)
-			m_BottomLeft_B.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		
-		// MoveOut m_Title1 and m_Title2
-		StartCoroutine(HideTitleTextMeshes());
+        m_MiddleCenter_A.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
+        m_MiddleCenter_B.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
+
+        // MoveOut m_Title1 and m_Title2
+        StartCoroutine(HideTitleTextMeshes());
 	}
 	
 	// MoveOut m_Title1 and m_Title2
@@ -148,7 +140,6 @@ public class GA_FREE_Demo01 : MonoBehaviour
 
 		// MoveOut m_Title1 and m_Title2
 		m_Title1.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);
-		m_Title2.MoveOut(GUIAnimSystemFREE.eGUIMove.Self);	
 	}
 	
 	#endregion // MoveIn/MoveOut
@@ -189,38 +180,6 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	
 	#region UI Responder
 
-	public void OnButton_BottomLeft()
-	{
-		// Disable m_TopLeft_A, m_RightBar_A, m_RightBar_C, m_BottomLeft_A for a few seconds
-		StartCoroutine(DisableButtonForSeconds(m_BottomLeft_A.gameObject, 0.3f));
-
-		// Toggle m_BottomLeft
-		ToggleBottomLeft();
-	}
-		
-	#endregion // UI Responder
-	
-	// ########################################
-	// Toggle button functions
-	// ########################################
-	
-	#region Toggle Button
-
-	// Toggle BottomLeft buttons
-	void ToggleBottomLeft()
-	{
-		m_BottomLeft_IsOn = !m_BottomLeft_IsOn;
-		if(m_BottomLeft_IsOn==true)
-		{
-			// m_BottomLeft_B moves in
-			m_BottomLeft_B.MoveIn(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		}
-		else
-		{
-			// m_BottomLeft_B moves out
-			m_BottomLeft_B.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-		}
-	}
 	
 	#endregion // Toggle Button
 }

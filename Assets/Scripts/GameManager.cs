@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
     public int scoreStarEnemy = 100;
     public int scorePolygonEnemy = 5;
     public int scoreTriangleEnemy = 10;
+    public int numOfCollition = 0;
 
     public Text scoreCount;
     public Image[] numLife;
@@ -28,6 +29,7 @@ public class GameManager : Singleton<GameManager>
     {
         currentNumLife = 1;
         currentScore = 0;
+        numOfCollition = 0;
 	}
 	
 	// Update is called once per frame

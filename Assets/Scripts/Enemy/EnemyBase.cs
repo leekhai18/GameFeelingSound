@@ -31,7 +31,9 @@ public class EnemyBase : MonoBehaviour
     {
         if (collision.tag == "Bullet")
         {
+            //Setup effect BulletHit
             AudioManager.Instance.PlayEffectSound(AudioManager.Instance.bulletHit);
+
             OnEnemyHit(PlayerManager.Instance.damageGun);
             collision.GetComponent<BulletBehaviour>().OnBulletHit();
         }

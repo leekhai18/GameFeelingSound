@@ -104,6 +104,9 @@ public class PolygonEnemy : EnemyBase
 
     public override void OnEnemyDie()
     {
+        //Setup effect EnemyDie
+        AudioManager.Instance.PlayEffectSound(AudioManager.Instance.enemyDie);
+
         OnEnemyKilled();
         ShowExplosionEffect();
         int currentLevel = level + 1;

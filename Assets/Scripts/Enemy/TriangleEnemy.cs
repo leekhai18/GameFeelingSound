@@ -71,6 +71,9 @@ public class TriangleEnemy : EnemyBase
 
     public override void OnEnemyDie()
     {
+        //Setup effect EnemyDie
+        AudioManager.Instance.PlayEffectSound(AudioManager.Instance.enemyDie);
+
         base.OnEnemyKilled();
         base.OnEnemyDie();
         var effect = PoolManager.SpawnObject(explosion, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
